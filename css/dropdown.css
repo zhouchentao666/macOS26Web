@@ -1,0 +1,117 @@
+/* 下拉菜单液态玻璃效果 */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  margin-top: 4px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6), 0 16px 32px rgba(0, 0, 0, 0.12);
+  backdrop-filter: url(#frosted);
+  -webkit-backdrop-filter: url(#frosted);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 10000;
+}
+
+
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  padding: 3px 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+  mix-blend-mode: normal;
+}
+
+/* 自动颜色：使用CSS滤镜反转来适应背景 */
+@supports (backdrop-filter: invert(1)) or (-webkit-backdrop-filter: invert(1)) {
+  .dropdown-menu {
+    backdrop-filter: url(#frosted) invert(0.05);
+    -webkit-backdrop-filter: url(#frosted) invert(0.05);
+  }
+}
+
+.dropdown-item:hover:not(.disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.dropdown-item.disabled {
+  color: rgba(255, 255, 255, 0.3);
+  cursor: default;
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 2px 8px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.shortcut {
+  margin-left: 24px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dropdown-item:hover:not(.disabled) .shortcut {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 浅色背景时的样式 */
+.dropdown-menu.light-bg .dropdown-item {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.dropdown-menu.light-bg .dropdown-item:hover:not(.disabled) {
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 1);
+}
+
+.dropdown-menu.light-bg .dropdown-item.disabled {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu.light-bg .dropdown-divider {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu.light-bg .shortcut {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-menu.light-bg .dropdown-item:hover:not(.disabled) .shortcut {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.menu-item-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-trigger {
+  cursor: pointer;
+  user-select: none;
+}
+
+.menu-item-wrapper.active > .menu-trigger {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}

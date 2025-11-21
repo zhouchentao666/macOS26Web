@@ -1,0 +1,23 @@
+/* 响应式 */
+@media (max-width: 768px) {
+    .dock {
+        padding: 6px 8px;
+        gap: 6px;
+    }
+    
+    .dock-item img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .menu-bar {
+        font-size: 12px;
+    }
+    
+    .window {
+        width: 90vw;
+        height: 70vh;
+        left: 5vw;
+        top: 80px;
+    }
+}

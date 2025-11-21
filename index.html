@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>macOS 26 Web Simulator</title>
+    <link rel="stylesheet" href="css/LiquidGlass.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/menubar.css">
+    <link rel="stylesheet" href="css/dock.css">
+    <link rel="stylesheet" href="css/desktop.css">
+    <link rel="stylesheet" href="css/finder.css">
+    <link rel="stylesheet" href="css/dropdown.css">
+    <link rel="stylesheet" href="css/contextmenu.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- 背景 -->
+    <div class="bg">
+        <img src="image/macOS 26 Light.jpg" alt="macOS 26 Background">
+    </div>
+
+    <!-- 桌面图标区域 -->
+    <div class="desktop-icons" id="desktop-icons">
+        <!-- 桌面图标将动态添加到这里 -->
+    </div>
+
+    <!-- 顶部菜单栏 -->
+    <div class="menu-bar">
+        <div class="menu-left">
+            <div class="menu-item-wrapper">
+                <img src="image/Apple logo light.png" alt="Apple" class="apple-logo menu-trigger">
+                <div class="dropdown-menu">
+                    <div class="dropdown-item">关于本机</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">系统设置...</div>
+                    <div class="dropdown-item">App Store...</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">最近使用的项目</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">强制退出...</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">睡眠</div>
+                    <div class="dropdown-item">重新启动...</div>
+                    <div class="dropdown-item">关机...</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">锁定屏幕</div>
+                    <div class="dropdown-item">退出登录...</div>
+                </div>
+            </div>
+            <div class="menu-item-wrapper">
+                <span class="menu-item menu-trigger active">访达</span>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item">关于访达</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">设置...</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">清倒废纸篓...</div>
+                    <div class="dropdown-item disabled">安全清倒废纸篓</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">服务</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">隐藏访达</div>
+                    <div class="dropdown-item">隐藏其他</div>
+                    <div class="dropdown-item">全部显示</div>
+                </div>
+            </div>
+            <div class="menu-item-wrapper">
+                <span class="menu-item menu-trigger">文件夹</span>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item">新建访达窗口 <span class="shortcut">⌘N</span></div>
+                    <div class="dropdown-item">新建文件夹夹 <span class="shortcut">⇧⌘N</span></div>
+                    <div class="dropdown-item">新建智能文件夹夹</div>
+                    <div class="dropdown-item">新建标签页 <span class="shortcut">⌘T</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">打开 <span class="shortcut">⌘O</span></div>
+                    <div class="dropdown-item">打开方式</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">关闭窗口 <span class="shortcut">⌘W</span></div>
+                    <div class="dropdown-item">获取信息 <span class="shortcut">⌘I</span></div>
+                    <div class="dropdown-item">重命名</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">添加到边栏</div>
+                    <div class="dropdown-item">移到废纸篓 <span class="shortcut">⌘⌫</span></div>
+                </div>
+            </div>
+            <div class="menu-item-wrapper">
+                <span class="menu-item menu-trigger">编辑</span>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item disabled">撤销 <span class="shortcut">⌘Z</span></div>
+                    <div class="dropdown-item disabled">重做 <span class="shortcut">⇧⌘Z</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item disabled">剪切 <span class="shortcut">⌘X</span></div>
+                    <div class="dropdown-item disabled">拷贝 <span class="shortcut">⌘C</span></div>
+                    <div class="dropdown-item disabled">粘贴 <span class="shortcut">⌘V</span></div>
+                    <div class="dropdown-item disabled">全选 <span class="shortcut">⌘A</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">显示剪贴板</div>
+                </div>
+            </div>
+            <div class="menu-item-wrapper">
+                <span class="menu-item menu-trigger">显示</span>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item">作为图标 <span class="shortcut">⌘1</span></div>
+                    <div class="dropdown-item">作为列表 <span class="shortcut">⌘2</span></div>
+                    <div class="dropdown-item">作为分栏 <span class="shortcut">⌘3</span></div>
+                    <div class="dropdown-item">作为画廊 <span class="shortcut">⌘4</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">显示预览 <span class="shortcut">⇧⌘P</span></div>
+                    <div class="dropdown-item">隐藏边栏 <span class="shortcut">⌥⌘S</span></div>
+                    <div class="dropdown-item">显示所有标签页</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">显示路径栏</div>
+                    <div class="dropdown-item">显示状态栏</div>
+                </div>
+            </div>
+            <div class="menu-item-wrapper">
+                <span class="menu-item menu-trigger">前往</span>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item">返回 <span class="shortcut">⌘[</span></div>
+                    <div class="dropdown-item">前进 <span class="shortcut">⌘]</span></div>
+                    <div class="dropdown-item">包围文件夹夹 <span class="shortcut">⌘↑</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">电脑 <span class="shortcut">⇧⌘C</span></div>
+                    <div class="dropdown-item">个人收藏 <span class="shortcut">⇧⌘H</span></div>
+                    <div class="dropdown-item">桌面 <span class="shortcut">⇧⌘D</span></div>
+                    <div class="dropdown-item">文稿 <span class="shortcut">⇧⌘O</span></div>
+                    <div class="dropdown-item">下载 <span class="shortcut">⌥⌘L</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">最近使用</div>
+                    <div class="dropdown-item">应用程序 <span class="shortcut">⇧⌘A</span></div>
+                    <div class="dropdown-item">实用工具 <span class="shortcut">⇧⌘U</span></div>
+                </div>
+            </div>
+            <div class="menu-item-wrapper">
+                <span class="menu-item menu-trigger">窗口</span>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item">最小化 <span class="shortcut">⌘M</span></div>
+                    <div class="dropdown-item">缩放</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">循环显示窗口 <span class="shortcut">⌘`</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">前置全部窗口</div>
+                </div>
+            </div>
+            <div class="menu-item-wrapper">
+                <span class="menu-item menu-trigger">帮助</span>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item">搜索</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">访达帮助</div>
+                    <div class="dropdown-item">macOS 帮助</div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-right">
+            <img src="image/battery.png" alt="Battery" class="menu-icon-img">
+            <img src="image/wifi.png" alt="WiFi" class="menu-icon-img">
+            <img src="image/search.png" alt="Search" class="menu-icon-img">
+            <img src="image/CtrlCentre.jpg" alt="Control Center" class="control-center-icon">
+            <span class="menu-time" id="current-time">周日 11月16日 下午2:30</span>
+        </div>
+    </div>
+
+    <!-- Dock 栏 -->
+    <div class="dock-container">
+        <div class="dock">
+            <div class="dock-item" data-app="Finder">
+                <img src="image/Finder.png" alt="Finder">
+                <span class="dock-label">访达</span>
+            </div>
+            <div class="dock-item" data-app="Launchpad">
+                <img src="image/Starting platform.png" alt="Launchpad">
+                <span class="dock-label">启动台</span>
+            </div>
+            <div class="dock-item" data-app="Safari">
+                <img src="image/Safari.png" alt="Safari">
+                <span class="dock-label">Safari</span>
+            </div>
+            <div class="dock-item" data-app="Messages">
+                <img src="image/messages.png" alt="Messages">
+                <span class="dock-label">信息</span>
+            </div>
+            <div class="dock-item" data-app="Mail">
+                <img src="image/mail.png" alt="Mail">
+                <span class="dock-label">邮件</span>
+            </div>
+            <div class="dock-item" data-app="Photos">
+                <img src="image/photos.png" alt="Photos">
+                <span class="dock-label">照片</span>
+            </div>
+            <div class="dock-item" data-app="Notes">
+                <img src="image/notes.png" alt="Notes">
+                <span class="dock-label">备忘录</span>
+            </div>
+            <div class="dock-item" data-app="TV">
+                <img src="image/tv.png" alt="TV">
+                <span class="dock-label">TV</span>
+            </div>
+            <div class="dock-item" data-app="Calculator">
+                <img src="image/Calculator.png" alt="Calculator">
+                <span class="dock-label">计算器</span>
+            </div>
+            <div class="dock-item" data-app="AppStore">
+                <img src="image/appstore.png" alt="App Store">
+                <span class="dock-label">App Store</span>
+            </div>
+            <div class="dock-item" data-app="Settings">
+                <img src="image/Settings.png" alt="Settings">
+                <span class="dock-label">设置</span>
+            </div>
+            <div class="dock-divider"></div>
+            <div class="dock-item" data-app="Terminal">
+                <img src="image/terminal.png" alt="Terminal">
+                <span class="dock-label">终端</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 访达窗口 -->
+    <div class="finder-window" id="finder-window" style="display: none;">
+        <div class="finder-content">
+            <div class="finder-sidebar">
+                <div class="window-controls">
+                    <span class="control-btn close"></span>
+                    <span class="control-btn minimize"></span>
+                    <span class="control-btn maximize"></span>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-label">个人收藏</div>
+                    <div class="sidebar-item active">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6L8 2L14 6V13C14 13.5304 13.7893 14.0391 13.4142 14.4142C13.0391 14.7893 12.5304 15 12 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V6Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>个人收藏</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+                        <span>应用程序</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M2 6H14" stroke="currentColor" stroke-width="1.5"/></svg>
+                        <span>桌面</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9 2H4C3.46957 2 2.96086 2.21071 2.58579 2.58579C2.21071 2.96086 2 3.46957 2 4V12C2 12.5304 2.21071 13.0391 2.58579 13.4142C2.96086 13.7893 3.46957 14 4 14H12C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 11L5 8L8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>文稿</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V11M8 11L11 8M8 11L5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 11V12C2 12.5304 2.21071 13.0391 2.58579 13.4142C2.96086 13.7893 3.46957 14 4 14H12C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>下载</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="6" r="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M14 10L11 7L2 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>图片</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5V8L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <span>音乐</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 2L6 8L13 14V2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 2V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <span>视频</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-label">iCloud</div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.5 7C11.5 7 11.5 7 11.5 7C12.163 7 12.7989 7.26339 13.2678 7.73223C13.7366 8.20107 14 8.83696 14 9.5C14 10.163 13.7366 10.7989 13.2678 11.2678C12.7989 11.7366 12.163 12 11.5 12H4.5C3.57174 12 2.6815 11.6313 2.02513 10.9749C1.36875 10.3185 1 9.42826 1 8.5C1 7.57174 1.36875 6.6815 2.02513 6.02513C2.6815 5.36875 3.57174 5 4.5 5C4.5 5 4.5 5 4.5 5C4.5 3.93913 4.92143 2.92172 5.67157 2.17157C6.42172 1.42143 7.43913 1 8.5 1C9.56087 1 10.5783 1.42143 11.3284 2.17157C12.0786 2.92172 12.5 3.93913 12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>iCloud 云盘</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-label">位置</div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>
+                        <span>磁盘</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-label">标签</div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4C3 3.44772 3.44772 3 4 3H12C12.5523 3 13 3.44772 13 4V13L8 10.5L3 13V4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>废纸篓</span>
+                    </div>
+                </div>
+            </div>
+            <div class="finder-main">
+                <div class="finder-titlebar">
+                    <div class="finder-titlebar-left">
+                        <div class="finder-toolbar">
+                            <button class="toolbar-btn" title="后退">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M8.5 3L4.5 7L8.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <button class="toolbar-btn" title="前进">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M5.5 3L9.5 7L5.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="toolbar-divider"></div>
+                            <button class="toolbar-btn new-folder-btn" title="新建文件夹">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M2 4C2 3.44772 2.44772 3 3 3H6L7 5H13C13.5523 5 14 5.44772 14 6V12C14 12.5523 13.5523 13 13 13H3C2.44772 13 2 12.5523 2 12V4Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8 7V11M6 9H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="finder-title">个人收藏</span>
+                    </div>
+                    <div class="finder-titlebar-view">
+                        <button class="toolbar-btn view-btn-grid" title="图标视图">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                                <rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                                <rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                                <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                            </svg>
+                        </button>
+                        <button class="toolbar-btn view-btn-list" title="列表视图">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <line x1="2" y1="3" x2="14" y2="3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                                <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                                <line x1="2" y1="13" x2="14" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="finder-titlebar-sort">
+                        <button class="toolbar-btn sort-btn" title="排序">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M4 3L4 13M4 13L2 11M4 13L6 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="9" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                                <line x1="9" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                                <line x1="9" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <div class="finder-sort-menu">
+                            <div class="sort-menu-item" data-sort="name-asc">名称 ↑</div>
+                            <div class="sort-menu-item" data-sort="name-desc">名称 ↓</div>
+                            <div class="sort-menu-item" data-sort="type">类型</div>
+                            <div class="sort-menu-item" data-sort="date">日期</div>
+                        </div>
+                    </div>
+                    <div class="finder-titlebar-search">
+                        <button class="toolbar-btn search-toggle-btn" title="搜索">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1.2"/>
+                                <path d="M9 9L12 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <input type="text" placeholder="搜索" class="search-input">
+                    </div>
+                </div>
+                <div class="finder-files">
+                    <div class="file-grid">
+                        <div class="file-item">
+                            <div class="file-icon"><img src="image/folder.png" alt="文件夹"></div>
+                            <div class="file-name">应用程序</div>
+                        </div>
+                        <div class="file-item">
+                            <div class="file-icon"><img src="image/folder.png" alt="文件夹"></div>
+                            <div class="file-name">桌面</div>
+                        </div>
+                        <div class="file-item">
+                            <div class="file-icon"><img src="image/folder.png" alt="文件夹"></div>
+                            <div class="file-name">文稿</div>
+                        </div>
+                        <div class="file-item">
+                            <div class="file-icon"><img src="image/folder.png" alt="文件夹"></div>
+                            <div class="file-name">下载</div>
+                        </div>
+                        <div class="file-item">
+                            <div class="file-icon"><img src="image/folder.png" alt="文件夹"></div>
+                            <div class="file-name">图片</div>
+                        </div>
+                        <div class="file-item">
+                            <div class="file-icon"><img src="image/folder.png" alt="文件夹"></div>
+                            <div class="file-name">音乐</div>
+                        </div>
+                        <div class="file-item">
+                            <div class="file-icon"><img src="image/folder.png" alt="文件夹"></div>
+                            <div class="file-name">视频</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SVG 滤镜 -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="frosted" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="20"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <script src="js/time.js"></script>
+    <script src="js/dropdown.js"></script>
+    <script src="js/finder.js"></script>
+    <script src="js/contextmenu.js"></script>
+    <script src="js/adaptive-color.js"></script>
+    <script src="js/menu-actions.js"></script>
+</body>
+</html>

@@ -1,0 +1,609 @@
+/* 访达窗口 - 圆润设计 */
+.finder-window {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 880px;
+    height: 580px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transform-origin: center center;
+}
+
+.finder-window.minimizing {
+    pointer-events: none;
+}
+
+.finder-titlebar {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    gap: 8px;
+    margin: 4px 12px 8px 0;
+    cursor: grab;
+    user-select: none;
+}
+
+.finder-titlebar:active {
+    cursor: grabbing;
+}
+
+.finder-titlebar-left {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.finder-titlebar-view {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    gap: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    width: auto;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.finder-titlebar-view .toolbar-btn {
+    position: relative;
+}
+
+.finder-titlebar-view .toolbar-btn svg {
+    display: block;
+}
+
+.finder-titlebar-sort {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    width: auto;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.window-controls {
+    display: flex;
+    gap: 6px;
+    padding: 16px 0 12px 12px;
+    justify-content: flex-start;
+}
+
+.control-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.control-btn.close {
+    background: #ff5f57;
+}
+
+.control-btn.minimize {
+    background: #ffbd2e;
+}
+
+.control-btn.maximize {
+    background: #28ca42;
+}
+
+.control-btn:hover {
+    filter: brightness(0.9);
+}
+
+.finder-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 0 8px;
+}
+
+.finder-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.toolbar-btn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+    font-size: 13px;
+    transition: background 0.15s;
+    cursor: pointer;
+    padding: 0;
+}
+
+.toolbar-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #666666;
+}
+
+.toolbar-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.toolbar-btn:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.toolbar-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.toolbar-btn.active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.toolbar-btn {
+    transition: background 0.15s, opacity 0.15s, transform 0.2s;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 4px;
+}
+
+.finder-titlebar-search {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    width: auto;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.finder-titlebar-search.collapsed {
+    width: auto;
+    padding: 0 10px;
+}
+
+.finder-titlebar-search.expanded {
+    width: 200px;
+    padding: 0 12px;
+}
+
+.search-toggle-btn {
+    flex-shrink: 0;
+}
+
+.search-toggle-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+.finder-titlebar-search.expanded .search-toggle-btn svg {
+    transform: scale(0.9);
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 12px;
+    color: #1d1d1f;
+    width: 0;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), 
+                opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.finder-titlebar-search.expanded .search-input {
+    width: 140px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-input::placeholder {
+    color: #86868b;
+}
+
+/* 排序下拉菜单 - 使用和顶栏一样的液态玻璃效果 */
+.finder-sort-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 140px;
+    padding: 3px;
+    background: rgba(30, 30, 30, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                0 16px 48px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 10000;
+}
+
+.finder-sort-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.sort-menu-item {
+    padding: 4px 16px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.sort-menu-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 1);
+}
+
+.sort-menu-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 1);
+    font-weight: 500;
+}
+
+.finder-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    padding: 8px 12px 12px 12px;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.finder-sidebar {
+    width: 180px;
+    background: rgba(245, 245, 247, 0.7);
+    backdrop-filter: blur(30px) saturate(180%) brightness(1.05);
+    -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(1.05);
+    border-radius: 12px;
+    padding: 0 8px 12px 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.finder-sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.finder-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.finder-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.finder-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-section {
+    margin-bottom: 12px;
+}
+
+.sidebar-section:first-of-type {
+    margin-top: 8px;
+}
+
+.sidebar-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #86868b;
+    padding: 2px 8px 4px 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    color: #1d1d1f;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.sidebar-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-item.active {
+    background: rgba(0, 122, 255, 0.15);
+    color: #007AFF;
+    font-weight: 500;
+}
+
+.sidebar-item svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: #1d1d1f;
+}
+
+.sidebar-item.active svg {
+    color: #007AFF;
+}
+
+.finder-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+}
+
+.finder-path {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px;
+    font-size: 11px;
+    color: #666;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(250, 250, 250, 0.8);
+}
+
+.path-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.path-item svg {
+    width: 14px;
+    height: 14px;
+}
+
+.path-separator {
+    color: #999;
+    font-size: 12px;
+}
+
+.finder-files {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.finder-files.grid-view {
+    padding: 20px;
+}
+
+.finder-files.list-view {
+    padding: 0;
+}
+
+/* 文件网格 */
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 16px;
+}
+
+.file-grid.grid-mode {
+    padding: 16px;
+}
+
+.file-grid.list-mode {
+    padding: 0;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+}
+
+.file-item:hover {
+    background: rgba(0, 122, 255, 0.1) !important;
+}
+
+.file-grid[style*="flex-direction: column"] .file-item:hover {
+    background: rgba(0, 122, 255, 0.15) !important;
+    transform: none;
+}
+
+.file-grid[style*="grid"] .file-item:hover {
+    transform: scale(1.02);
+}
+
+.file-icon {
+    font-size: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-icon img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.file-icon-svg {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-icon-svg svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+}
+
+.file-name {
+    font-size: 12px;
+    color: #1d1d1f;
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+.file-size {
+    font-size: 10px;
+    color: #86868b;
+    text-align: center;
+}
+
+
+
+/* 自适应颜色 - 浅色背景 */
+.finder-sort-menu.light-bg {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12),
+                0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.finder-sort-menu.light-bg .sort-menu-item {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.finder-sort-menu.light-bg .sort-menu-item:hover {
+    background: rgba(0, 122, 255, 0.1);
+    color: #007AFF;
+}
+
+.finder-sort-menu.light-bg .sort-menu-item.active {
+    background: rgba(0, 122, 255, 0.15);
+    color: #007AFF;
+}
+
+/* 窗口大小调整区域 */
+.resize-handle {
+    position: absolute;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+.resize-top {
+    top: 0;
+    left: 16px;
+    right: 16px;
+    height: 6px;
+}
+
+.resize-right {
+    top: 16px;
+    right: 0;
+    bottom: 16px;
+    width: 6px;
+}
+
+.resize-bottom {
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 6px;
+}
+
+.resize-left {
+    top: 16px;
+    left: 0;
+    bottom: 16px;
+    width: 6px;
+}
+
+.resize-top-left {
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.resize-top-right {
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.resize-bottom-left {
+    bottom: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.resize-bottom-right {
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+}
+
