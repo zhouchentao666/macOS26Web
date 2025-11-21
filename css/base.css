@@ -3,27 +3,6 @@
 /* 苹方字体 */
 @font-face {
     font-family: 'PingFang SC';
-    src: url('../ttf/PingFangSC-Ultralight.ttf') format('truetype');
-    font-weight: 100;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'PingFang SC';
-    src: url('../ttf/PingFangSC-Thin.ttf') format('truetype');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'PingFang SC';
-    src: url('../ttf/PingFangSC-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'PingFang SC';
     src: url('../ttf/PingFangSC-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
@@ -33,13 +12,6 @@
     font-family: 'PingFang SC';
     src: url('../ttf/PingFangSC-Medium.ttf') format('truetype');
     font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'PingFang SC';
-    src: url('../ttf/PingFangSC-Semibold.ttf') format('truetype');
-    font-weight: 600;
     font-style: normal;
 }
 
