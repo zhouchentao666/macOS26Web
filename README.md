@@ -4,6 +4,11 @@
 
 简体中文 | [English](README.en.md)
 
+## 界面展示
+<img width="1411" height="738" alt="image" src="https://github.com/user-attachments/assets/2d2b5e43-41ef-4ff9-a7cf-8cd7d79de6f7" />
+<img width="1415" height="734" alt="image" src="https://github.com/user-attachments/assets/99903f5c-8fff-4de2-8082-8419d3d376d3" />
+
+
 ## ✨ 特性
 
 - 🎨 **高度还原的 macOS 界面** - 完整模拟 macOS 的视觉设计和交互体验
