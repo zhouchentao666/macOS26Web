@@ -161,15 +161,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const currentLeft = finderWindow.style.left || currentStyles.left;
                 const currentTransform = finderWindow.style.transform || currentStyles.transform;
                 
-                if (currentWidth !== '880px' || currentTop !== '60px' || currentTransform !== 'translateX(-50%)') {
-                    originalSize = {
-                        width: currentWidth,
-                        height: currentHeight,
-                        top: currentTop,
-                        left: currentLeft,
-                        transform: currentTransform === 'none' ? '' : currentTransform
-                    };
-                }
+                // 总是保存当前窗口状态，无论是否在默认位置
+                originalSize = {
+                    width: currentWidth,
+                    height: currentHeight,
+                    top: currentTop,
+                    left: currentLeft,
+                    transform: currentTransform === 'none' ? '' : currentTransform
+                };
                 
                 if (menuBar) {
                     menuBar.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
@@ -189,6 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 finderWindow.style.transform = 'none';
                 finderWindow.style.borderRadius = '0';
                 isMaximized = true;
+                
+                // 添加鼠标移动检测
+                setupFullscreenMouseDetection();
             } else {
                 if (menuBar) {
                     menuBar.style.transform = 'translateY(0)';
@@ -199,15 +201,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     dockContainer.style.opacity = '1';
                 }
                 
+                // 确保originalSize有值，默认为默认窗口大小和位置
+                if (!originalSize) {
+                    originalSize = {
+                        width: '880px',
+                        height: '580px',
+                        top: '60px',
+                        left: '50%',
+                        transform: 'translateX(-50%)'
+                    };
+                }
+                
                 finderWindow.style.width = originalSize.width;
                 finderWindow.style.height = originalSize.height;
                 finderWindow.style.top = originalSize.top;
                 finderWindow.style.left = originalSize.left;
                 finderWindow.style.transform = originalSize.transform || 'translateX(-50%)';
-                finderWindow.style.borderRadius = '10px';
+                finderWindow.style.borderRadius = '16px';
                 isMaximized = false;
                 xOffset = 0;
                 yOffset = 0;
+                
+                // 移除鼠标移动检测
+                removeFullscreenMouseDetection();
             }
             
             setTimeout(() => {
@@ -217,9 +233,136 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
         });
     }
+    
+    // 全屏模式鼠标移动检测
+    let menuBarTimer;
+    let dockTimer;
+    
+    function setupFullscreenMouseDetection() {
+        document.addEventListener('mousemove', handleFullscreenMouseMove);
+    }
+    
+    function removeFullscreenMouseDetection() {
+        document.removeEventListener('mousemove', handleFullscreenMouseMove);
+    }
+    
+    function handleFullscreenMouseMove(e) {
+        const menuBar = document.querySelector('.menu-bar');
+        const dockContainer = document.querySelector('.dock-container');
+        
+        // 检测鼠标是否移到顶部区域
+        if (e.clientY < 30) {
+            if (menuBar) {
+                menuBar.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                menuBar.style.transform = 'translateY(0)';
+                menuBar.style.opacity = '1';
+            }
+            
+            // 清除定时器
+            clearTimeout(menuBarTimer);
+            // 设置定时器，3秒后自动隐藏
+            menuBarTimer = setTimeout(() => {
+                if (isMaximized && menuBar) {
+                    menuBar.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    menuBar.style.transform = 'translateY(-100%)';
+                    menuBar.style.opacity = '0';
+                }
+            }, 3000);
+        }
+        
+        // 检测鼠标是否移到底部区域
+        if (e.clientY > window.innerHeight - 60) {
+            if (dockContainer) {
+                dockContainer.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                dockContainer.style.transform = 'translateX(-50%) translateY(0)';
+                dockContainer.style.opacity = '1';
+            }
+            
+            // 清除定时器
+            clearTimeout(dockTimer);
+            // 设置定时器，3秒后自动隐藏
+            dockTimer = setTimeout(() => {
+                if (isMaximized && dockContainer) {
+                    dockContainer.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    dockContainer.style.transform = 'translateX(-50%) translateY(100%)';
+                    dockContainer.style.opacity = '0';
+                }
+            }, 3000);
+        }
+    }
+    
+    // 设置窗口全屏模式鼠标移动检测
+    function setupSettingsFullscreenMouseDetection() {
+        document.addEventListener('mousemove', handleSettingsFullscreenMouseMove);
+    }
+    
+    function removeSettingsFullscreenMouseDetection() {
+        document.removeEventListener('mousemove', handleSettingsFullscreenMouseMove);
+    }
+    
+    function handleSettingsFullscreenMouseMove(e) {
+        const menuBar = document.querySelector('.menu-bar');
+        const dockContainer = document.querySelector('.dock-container');
+        
+        // 检测鼠标是否移到顶部区域
+        if (e.clientY < 30) {
+            if (menuBar) {
+                menuBar.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                menuBar.style.transform = 'translateY(0)';
+                menuBar.style.opacity = '1';
+            }
+            
+            // 清除定时器
+            clearTimeout(settingsMenuBarTimer);
+            // 设置定时器，3秒后自动隐藏
+            settingsMenuBarTimer = setTimeout(() => {
+                if (settingsIsMaximized && menuBar) {
+                    menuBar.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    menuBar.style.transform = 'translateY(-100%)';
+                    menuBar.style.opacity = '0';
+                }
+            }, 3000);
+        }
+        
+        // 检测鼠标是否移到底部区域
+        if (e.clientY > window.innerHeight - 60) {
+            if (dockContainer) {
+                dockContainer.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                dockContainer.style.transform = 'translateX(-50%) translateY(0)';
+                dockContainer.style.opacity = '1';
+            }
+            
+            // 清除定时器
+            clearTimeout(settingsDockTimer);
+            // 设置定时器，3秒后自动隐藏
+            settingsDockTimer = setTimeout(() => {
+                if (settingsIsMaximized && dockContainer) {
+                    dockContainer.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    dockContainer.style.transform = 'translateX(-50%) translateY(100%)';
+                    dockContainer.style.opacity = '0';
+                }
+            }, 3000);
+        }
+    }
+
+    // 窗口激活功能
+    function activateWindow(windowElement) {
+        // 将所有窗口的z-index设置为默认值
+        const allWindows = document.querySelectorAll('.finder-window');
+        allWindows.forEach(win => {
+            win.style.zIndex = '100';
+        });
+        // 将当前窗口的z-index设置为更高的值
+        windowElement.style.zIndex = '101';
+    }
 
     // 拖动功能 - 使用侧栏和整个标题栏区域
     if (finderWindow) {
+        // 点击窗口时激活
+        finderWindow.addEventListener('mousedown', function() {
+            activateWindow(finderWindow);
+        });
+        
         if (titlebar) {
             titlebar.addEventListener('mousedown', dragStart);
         }
@@ -311,6 +454,18 @@ document.addEventListener('DOMContentLoaded', function() {
             initialY = currentY;
             isDragging = false;
             finderWindow.style.cursor = 'default';
+            
+            // 更新原始位置，确保最大化后还原时能回到拖动后的位置
+            if (!isMaximized) {
+                const currentStyles = window.getComputedStyle(finderWindow);
+                originalSize = {
+                    width: finderWindow.style.width || currentStyles.width,
+                    height: finderWindow.style.height || currentStyles.height,
+                    top: finderWindow.style.top || currentStyles.top,
+                    left: finderWindow.style.left || currentStyles.left,
+                    transform: (finderWindow.style.transform || currentStyles.transform) === 'none' ? '' : (finderWindow.style.transform || currentStyles.transform)
+                };
+            }
         }
     }
     
@@ -1023,4 +1178,677 @@ document.addEventListener('DOMContentLoaded', function() {
             newFolderBtn?.click();
         }
     };
+    
+    // 设置窗口下拉菜单功能
+    function setupSettingsDropdowns() {
+        const menuTriggers = document.querySelectorAll('.settings-dropdown');
+        
+        menuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const menuWrapper = this.closest('.menu-item-wrapper');
+                const menu = menuWrapper.querySelector('.dropdown-menu');
+                
+                // 关闭其他下拉菜单
+                document.querySelectorAll('.menu-item-wrapper').forEach(wrapper => {
+                    if (wrapper !== menuWrapper) {
+                        wrapper.classList.remove('active');
+                        wrapper.querySelector('.dropdown-menu')?.classList.remove('show');
+                    }
+                });
+                
+                // 切换当前菜单
+                menuWrapper.classList.toggle('active');
+                menu.classList.toggle('show');
+            });
+            
+            // 点击菜单项
+            const menuItems = trigger.closest('.menu-item-wrapper').querySelectorAll('.dropdown-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const value = this.dataset.value;
+                    const triggerText = trigger.querySelector('span');
+                    triggerText.textContent = value;
+                    
+                    // 如果是外观选项，更新主题模式
+                    if (trigger.closest('.settings-item').querySelector('label').textContent === '外观') {
+                        setAppearanceMode(value);
+                    }
+                    // 如果是强调色选项，更新主题色
+                    else if (trigger.closest('.settings-item').querySelector('label').textContent === '强调色') {
+                        // 定义颜色映射
+                        const colorMap = {
+                            '蓝色': { hex: '#007AFF', rgb: '0, 122, 255' },
+                            '紫色': { hex: '#9C27B0', rgb: '156, 39, 176' },
+                            '粉色': { hex: '#E91E63', rgb: '233, 30, 99' },
+                            '红色': { hex: '#F44336', rgb: '244, 67, 54' },
+                            '橙色': { hex: '#FF9800', rgb: '255, 152, 0' },
+                            '黄色': { hex: '#FFEB3B', rgb: '255, 235, 59' },
+                            '绿色': { hex: '#4CAF50', rgb: '76, 175, 80' },
+                            '青色': { hex: '#00BCD4', rgb: '0, 188, 212' }
+                        };
+                        
+                        if (colorMap[value]) {
+                            document.documentElement.style.setProperty('--accent-color', colorMap[value].hex);
+                            document.documentElement.style.setProperty('--accent-rgb', colorMap[value].rgb);
+                            // 保存到本地存储
+                            localStorage.setItem('accentColor', value);
+                        }
+                    }
+                    
+                    // 关闭菜单
+                    const menuWrapper = trigger.closest('.menu-item-wrapper');
+                    const menu = menuWrapper.querySelector('.dropdown-menu');
+                    menuWrapper.classList.remove('active');
+                    menu.classList.remove('show');
+                });
+            });
+        });
+        
+        // 点击其他地方关闭菜单
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.menu-item-wrapper').forEach(wrapper => {
+                wrapper.classList.remove('active');
+                wrapper.querySelector('.dropdown-menu')?.classList.remove('show');
+            });
+        });
+    }
+    
+    // 设置外观模式
+    function setAppearanceMode(mode) {
+        // 保存到本地存储
+        localStorage.setItem('appearanceMode', mode);
+        
+        // 移除之前的事件监听器
+        window.removeEventListener('resize', checkDarkMode);
+        
+        if (mode === '深色') {
+            document.body.classList.add('dark-mode');
+            // 切换到深色壁纸
+            const bgImage = document.querySelector('.bg img');
+            if (bgImage) {
+                bgImage.src = 'image/macOS 26 Dark.jpg';
+            }
+        } else if (mode === '浅色') {
+            document.body.classList.remove('dark-mode');
+            // 切换到浅色壁纸
+            const bgImage = document.querySelector('.bg img');
+            if (bgImage) {
+                bgImage.src = 'image/macOS 26 Light.jpg';
+            }
+        } else if (mode === '自动') {
+            // 自动模式：根据系统设置或时间
+            checkDarkMode();
+            window.addEventListener('resize', checkDarkMode);
+        }
+    }
+    
+    // 检查是否应该使用深色模式
+    function checkDarkMode() {
+        // 检查系统设置
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const bgImage = document.querySelector('.bg img');
+        if (prefersDark) {
+            document.body.classList.add('dark-mode');
+            // 切换到深色壁纸
+            if (bgImage) {
+                bgImage.src = 'image/macOS 26 Dark.jpg';
+            }
+        } else {
+            document.body.classList.remove('dark-mode');
+            // 切换到浅色壁纸
+            if (bgImage) {
+                bgImage.src = 'image/macOS 26 Light.jpg';
+            }
+        }
+    }
+    
+    // 从本地存储加载主题色设置
+    function loadAccentColor() {
+        const savedColor = localStorage.getItem('accentColor');
+        if (savedColor) {
+            // 定义颜色映射
+            const colorMap = {
+                '蓝色': { hex: '#007AFF', rgb: '0, 122, 255' },
+                '紫色': { hex: '#9C27B0', rgb: '156, 39, 176' },
+                '粉色': { hex: '#E91E63', rgb: '233, 30, 99' },
+                '红色': { hex: '#F44336', rgb: '244, 67, 54' },
+                '橙色': { hex: '#FF9800', rgb: '255, 152, 0' },
+                '黄色': { hex: '#FFEB3B', rgb: '255, 235, 59' },
+                '绿色': { hex: '#4CAF50', rgb: '76, 175, 80' },
+                '青色': { hex: '#00BCD4', rgb: '0, 188, 212' }
+            };
+            
+            if (colorMap[savedColor]) {
+                document.documentElement.style.setProperty('--accent-color', colorMap[savedColor].hex);
+                document.documentElement.style.setProperty('--accent-rgb', colorMap[savedColor].rgb);
+                // 更新设置窗口中的显示
+                const settingsItems = document.querySelectorAll('.settings-item');
+                settingsItems.forEach(item => {
+                    const label = item.querySelector('label');
+                    if (label && label.textContent === '强调色') {
+                        const dropdownSpan = item.querySelector('.settings-dropdown span');
+                        if (dropdownSpan) {
+                            dropdownSpan.textContent = savedColor;
+                        }
+                    }
+                });
+            }
+        }
+    }
+    
+    // 从本地存储加载外观模式设置
+    function loadAppearanceMode() {
+        const savedMode = localStorage.getItem('appearanceMode') || '浅色';
+        // 更新设置窗口中的显示
+        const settingsItems = document.querySelectorAll('.settings-item');
+        settingsItems.forEach(item => {
+            const label = item.querySelector('label');
+            if (label && label.textContent === '外观') {
+                const dropdownSpan = item.querySelector('.settings-dropdown span');
+                if (dropdownSpan) {
+                    dropdownSpan.textContent = savedMode;
+                }
+            }
+        });
+        // 应用外观模式
+        setAppearanceMode(savedMode);
+    }
+    
+    // 初始化设置窗口下拉菜单
+    setupSettingsDropdowns();
+    // 加载主题色设置
+    loadAccentColor();
+    // 加载外观模式设置
+    loadAppearanceMode();
+
+    // 设置窗口交互
+    const settingsWindow = document.getElementById('settings-window');
+    const settingsDockItem = document.querySelector('.dock-item[data-app="Settings"]');
+    const settingsCloseBtn = settingsWindow?.querySelector('.control-btn.close');
+    const settingsMinimizeBtn = settingsWindow?.querySelector('.control-btn.minimize');
+    const settingsMaximizeBtn = settingsWindow?.querySelector('.control-btn.maximize');
+    const settingsTitlebar = settingsWindow?.querySelector('.finder-titlebar');
+    const settingsSidebar = settingsWindow?.querySelector('.finder-sidebar');
+    
+    let settingsIsDragging = false;
+    let settingsIsMaximized = false;
+    let settingsCurrentX;
+    let settingsCurrentY;
+    let settingsInitialX;
+    let settingsInitialY;
+    let settingsXOffset = 0;
+    let settingsYOffset = 0;
+    
+    // 保存设置窗口原始尺寸和位置
+    let settingsOriginalSize = {
+        width: '900px',
+        height: '550px',
+        top: '80px',
+        left: '50%',
+        transform: 'translateX(-50%)'
+    };
+    
+    // 设置窗口全屏模式鼠标移动检测
+    let settingsMenuBarTimer;
+    let settingsDockTimer;
+    
+    // 点击 Dock 中的设置图标打开/关闭窗口
+    if (settingsDockItem && settingsWindow) {
+        settingsDockItem.addEventListener('click', function() {
+            if (settingsWindow.style.display === 'none' || !settingsWindow.style.display) {
+                settingsWindow.style.display = 'flex';
+                settingsWindow.style.opacity = '0';
+                settingsWindow.style.transform = 'translateX(-50%) scale(0.1)';
+                settingsWindow.offsetHeight;
+                settingsWindow.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s ease';
+                settingsWindow.style.transform = 'translateX(-50%) scale(1)';
+                settingsWindow.style.opacity = '1';
+                setTimeout(() => {
+                    settingsWindow.style.transition = '';
+                }, 400);
+                // 激活设置窗口
+                activateWindow(settingsWindow);
+            } else {
+                settingsWindow.style.display = 'none';
+            }
+        });
+    }
+    
+    // 设置窗口激活功能
+    if (settingsWindow) {
+        // 点击窗口时激活
+        settingsWindow.addEventListener('mousedown', function() {
+            activateWindow(settingsWindow);
+        });
+    }
+    
+    // 设置窗口关闭按钮
+    if (settingsCloseBtn && settingsWindow) {
+        settingsCloseBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (settingsIsMaximized) {
+                const menuBar = document.querySelector('.menu-bar');
+                const dockContainer = document.querySelector('.dock-container');
+                if (menuBar) {
+                    menuBar.style.transition = '';
+                    menuBar.style.transform = 'translateY(0)';
+                    menuBar.style.opacity = '1';
+                }
+                if (dockContainer) {
+                    dockContainer.style.transition = '';
+                    dockContainer.style.transform = 'translateX(-50%) translateY(0)';
+                    dockContainer.style.opacity = '1';
+                }
+                settingsWindow.style.transition = '';
+                settingsWindow.style.width = settingsOriginalSize.width;
+                settingsWindow.style.height = settingsOriginalSize.height;
+                settingsWindow.style.top = settingsOriginalSize.top;
+                settingsWindow.style.left = settingsOriginalSize.left;
+                settingsWindow.style.transform = settingsOriginalSize.transform;
+                settingsWindow.style.borderRadius = '10px';
+                settingsIsMaximized = false;
+                settingsXOffset = 0;
+                settingsYOffset = 0;
+            }
+            settingsWindow.style.display = 'none';
+        });
+    }
+
+    // 设置窗口最小化按钮
+    if (settingsMinimizeBtn && settingsWindow) {
+        settingsMinimizeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menuBar = document.querySelector('.menu-bar');
+            const dockContainer = document.querySelector('.dock-container');
+            
+            if (settingsIsMaximized) {
+                if (menuBar) {
+                    menuBar.style.transition = '';
+                    menuBar.style.transform = 'translateY(0)';
+                    menuBar.style.opacity = '1';
+                }
+                if (dockContainer) {
+                    dockContainer.style.transition = '';
+                    dockContainer.style.transform = 'translateX(-50%) translateY(0)';
+                    dockContainer.style.opacity = '1';
+                }
+                settingsWindow.style.transition = '';
+                settingsWindow.style.width = settingsOriginalSize.width;
+                settingsWindow.style.height = settingsOriginalSize.height;
+                settingsWindow.style.top = settingsOriginalSize.top;
+                settingsWindow.style.left = settingsOriginalSize.left;
+                settingsWindow.style.transform = settingsOriginalSize.transform;
+                settingsWindow.style.borderRadius = '10px';
+                settingsIsMaximized = false;
+                requestAnimationFrame(() => {
+                    settingsPerformMinimize();
+                });
+            } else {
+                settingsPerformMinimize();
+            }
+            
+            function settingsPerformMinimize() {
+                const dockIcon = document.querySelector('.dock-item[data-app="Settings"]');
+                if (!dockIcon) {
+                    settingsWindow.style.display = 'none';
+                    return;
+                }
+                const windowRect = settingsWindow.getBoundingClientRect();
+                const iconRect = dockIcon.getBoundingClientRect();
+                settingsWindow.classList.add('minimizing');
+                const scaleX = iconRect.width / windowRect.width;
+                const scaleY = iconRect.height / windowRect.height;
+                const translateX = iconRect.left + iconRect.width / 2 - (windowRect.left + windowRect.width / 2);
+                const translateY = iconRect.top + iconRect.height / 2 - (windowRect.top + windowRect.height / 2);
+                settingsWindow.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s ease';
+                settingsWindow.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+                settingsWindow.style.opacity = '0';
+                setTimeout(() => {
+                    settingsWindow.style.display = 'none';
+                    settingsWindow.classList.remove('minimizing');
+                    settingsWindow.style.transition = '';
+                    settingsWindow.style.transform = '';
+                    settingsWindow.style.opacity = '1';
+                }, 400);
+            }
+        });
+    }
+    
+    // 设置窗口最大化/还原按钮
+    if (settingsMaximizeBtn && settingsWindow) {
+        settingsMaximizeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menuBar = document.querySelector('.menu-bar');
+            const dockContainer = document.querySelector('.dock-container');
+            settingsWindow.style.transition = 'width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease, border-radius 0.3s ease, transform 0.3s ease';
+            
+            if (!settingsIsMaximized) {
+                const currentStyles = window.getComputedStyle(settingsWindow);
+                const currentWidth = settingsWindow.style.width || currentStyles.width;
+                const currentHeight = settingsWindow.style.height || currentStyles.height;
+                const currentTop = settingsWindow.style.top || currentStyles.top;
+                const currentLeft = settingsWindow.style.left || currentStyles.left;
+                const currentTransform = settingsWindow.style.transform || currentStyles.transform;
+                
+                // 总是保存当前窗口状态，无论是否在默认位置
+                settingsOriginalSize = {
+                    width: currentWidth,
+                    height: currentHeight,
+                    top: currentTop,
+                    left: currentLeft,
+                    transform: currentTransform === 'none' ? '' : currentTransform
+                };
+                
+                if (menuBar) {
+                    menuBar.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    menuBar.style.transform = 'translateY(-100%)';
+                    menuBar.style.opacity = '0';
+                }
+                if (dockContainer) {
+                    dockContainer.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    dockContainer.style.transform = 'translateX(-50%) translateY(100%)';
+                    dockContainer.style.opacity = '0';
+                }
+                
+                settingsWindow.style.width = '100vw';
+                settingsWindow.style.height = '100vh';
+                settingsWindow.style.top = '0';
+                settingsWindow.style.left = '0';
+                settingsWindow.style.transform = 'none';
+                settingsWindow.style.borderRadius = '0';
+                settingsIsMaximized = true;
+                
+                // 添加鼠标移动检测
+                setupSettingsFullscreenMouseDetection();
+            } else {
+                if (menuBar) {
+                    menuBar.style.transform = 'translateY(0)';
+                    menuBar.style.opacity = '1';
+                }
+                if (dockContainer) {
+                    dockContainer.style.transform = 'translateX(-50%) translateY(0)';
+                    dockContainer.style.opacity = '1';
+                }
+                
+                // 确保settingsOriginalSize有值，默认为默认窗口大小和位置
+                if (!settingsOriginalSize) {
+                    settingsOriginalSize = {
+                        width: '900px',
+                        height: '550px',
+                        top: '80px',
+                        left: '50%',
+                        transform: 'translateX(-50%)'
+                    };
+                }
+                
+                settingsWindow.style.width = settingsOriginalSize.width;
+                settingsWindow.style.height = settingsOriginalSize.height;
+                settingsWindow.style.top = settingsOriginalSize.top;
+                settingsWindow.style.left = settingsOriginalSize.left;
+                settingsWindow.style.transform = settingsOriginalSize.transform || 'translateX(-50%)';
+                settingsWindow.style.borderRadius = '16px';
+                settingsIsMaximized = false;
+                settingsXOffset = 0;
+                settingsYOffset = 0;
+                
+                // 移除鼠标移动检测
+                removeSettingsFullscreenMouseDetection();
+            }
+            
+            setTimeout(() => {
+                settingsWindow.style.transition = '';
+                if (menuBar) menuBar.style.transition = '';
+                if (dockContainer) dockContainer.style.transition = '';
+            }, 300);
+        });
+    }
+
+    // 设置窗口拖动功能
+    if (settingsWindow) {
+        if (settingsTitlebar) {
+            settingsTitlebar.addEventListener('mousedown', settingsDragStart);
+        }
+        if (settingsSidebar) {
+            settingsSidebar.addEventListener('mousedown', function(e) {
+                if (e.target === settingsSidebar || e.target.classList.contains('window-controls')) {
+                    settingsDragStart(e);
+                }
+            });
+        }
+        document.addEventListener('mousemove', settingsDrag);
+        document.addEventListener('mouseup', settingsDragEnd);
+    }
+    
+    function settingsDragStart(e) {
+        if (e.target.classList.contains('control-btn') || e.target.classList.contains('toolbar-btn') || 
+            e.target.classList.contains('sidebar-item') || e.target.classList.contains('sidebar-label')) {
+            return;
+        }
+        
+        if (settingsIsMaximized) {
+            settingsIsMaximized = false;
+            const menuBar = document.querySelector('.menu-bar');
+            const dockContainer = document.querySelector('.dock-container');
+            if (menuBar) {
+                menuBar.style.transition = '';
+                menuBar.style.transform = 'translateY(0)';
+                menuBar.style.opacity = '1';
+            }
+            if (dockContainer) {
+                dockContainer.style.transition = '';
+                dockContainer.style.transform = 'translateX(-50%) translateY(0)';
+                dockContainer.style.opacity = '1';
+            }
+            
+            settingsWindow.style.transition = '';
+            settingsWindow.style.width = settingsOriginalSize.width;
+            settingsWindow.style.height = settingsOriginalSize.height;
+            settingsWindow.style.borderRadius = '10px';
+            const mouseXPercent = e.clientX / window.innerWidth;
+            settingsWindow.style.left = e.clientX - (parseInt(settingsOriginalSize.width) * mouseXPercent) + 'px';
+            settingsWindow.style.top = e.clientY - 26 + 'px';
+            settingsWindow.style.transform = 'none';
+            settingsXOffset = 0;
+            settingsYOffset = 0;
+        }
+        
+        settingsInitialX = e.clientX - settingsXOffset;
+        settingsInitialY = e.clientY - settingsYOffset;
+        
+        if ((settingsTitlebar && (e.target === settingsTitlebar || settingsTitlebar.contains(e.target))) || 
+            (settingsSidebar && e.target === settingsSidebar) || 
+            e.target.classList.contains('window-controls')) {
+            settingsIsDragging = true;
+            settingsWindow.style.cursor = 'grabbing';
+        }
+    }
+    
+    function settingsDrag(e) {
+        if (settingsIsDragging) {
+            e.preventDefault();
+            settingsWindow.style.transition = '';
+            settingsCurrentX = e.clientX - settingsInitialX;
+            settingsCurrentY = e.clientY - settingsInitialY;
+            settingsXOffset = settingsCurrentX;
+            settingsYOffset = settingsCurrentY;
+            const rect = settingsWindow.getBoundingClientRect();
+            let newLeft = rect.left + settingsCurrentX;
+            let newTop = rect.top + settingsCurrentY;
+            const titlebarHeight = settingsTitlebar.offsetHeight;
+            const minLeft = 0;
+            const maxLeft = window.innerWidth - rect.width;
+            const minTop = 0;
+            const maxTop = window.innerHeight - titlebarHeight;
+            newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+            newTop = Math.max(minTop, Math.min(newTop, maxTop));
+            settingsWindow.style.left = newLeft + 'px';
+            settingsWindow.style.top = newTop + 'px';
+            settingsWindow.style.transform = 'none';
+            settingsInitialX = e.clientX;
+            settingsInitialY = e.clientY;
+        }
+    }
+    
+    function settingsDragEnd() {
+        if (settingsIsDragging) {
+            settingsInitialX = settingsCurrentX;
+            settingsInitialY = settingsCurrentY;
+            settingsIsDragging = false;
+            settingsWindow.style.cursor = 'default';
+            
+            // 更新原始位置，确保最大化后还原时能回到拖动后的位置
+            if (!settingsIsMaximized) {
+                const currentStyles = window.getComputedStyle(settingsWindow);
+                settingsOriginalSize = {
+                    width: settingsWindow.style.width || currentStyles.width,
+                    height: settingsWindow.style.height || currentStyles.height,
+                    top: settingsWindow.style.top || currentStyles.top,
+                    left: settingsWindow.style.left || currentStyles.left,
+                    transform: (settingsWindow.style.transform || currentStyles.transform) === 'none' ? '' : (settingsWindow.style.transform || currentStyles.transform)
+                };
+            }
+        }
+    }
+
+    // 设置窗口大小调整功能
+    function createSettingsResizeHandles() {
+        if (!settingsWindow) return;
+        
+        settingsWindow.querySelectorAll('.resize-handle').forEach(el => el.remove());
+        
+        const handles = [
+            { name: 'top', cursor: 'ns-resize' },
+            { name: 'right', cursor: 'ew-resize' },
+            { name: 'bottom', cursor: 'ns-resize' },
+            { name: 'left', cursor: 'ew-resize' },
+            { name: 'top-left', cursor: 'nwse-resize' },
+            { name: 'top-right', cursor: 'nesw-resize' },
+            { name: 'bottom-left', cursor: 'nesw-resize' },
+            { name: 'bottom-right', cursor: 'nwse-resize' }
+        ];
+        
+        handles.forEach(handle => {
+            const div = document.createElement('div');
+            div.className = `resize-handle resize-${handle.name}`;
+            div.style.cursor = handle.cursor;
+            settingsWindow.insertBefore(div, settingsWindow.firstChild);
+        });
+    }
+    
+    let settingsIsResizing = false;
+    let settingsResizeDirection = '';
+    let settingsStartWidth, settingsStartHeight, settingsStartX, settingsStartY, settingsStartLeft, settingsStartTop;
+    
+    function settingsStartResize(e, direction) {
+        if (settingsIsMaximized) return;
+        
+        settingsIsResizing = true;
+        settingsResizeDirection = direction;
+        settingsStartX = e.clientX;
+        settingsStartY = e.clientY;
+        
+        const rect = settingsWindow.getBoundingClientRect();
+        settingsStartWidth = rect.width;
+        settingsStartHeight = rect.height;
+        settingsStartLeft = rect.left;
+        settingsStartTop = rect.top;
+        
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    function settingsDoResize(e) {
+        if (!settingsIsResizing) return;
+        
+        const deltaX = e.clientX - settingsStartX;
+        const deltaY = e.clientY - settingsStartY;
+        
+        const minWidth = 600;
+        const minHeight = 400;
+        
+        let newWidth = settingsStartWidth;
+        let newHeight = settingsStartHeight;
+        let newLeft = settingsStartLeft;
+        let newTop = settingsStartTop;
+        
+        if (settingsResizeDirection.includes('right')) {
+            newWidth = Math.max(minWidth, settingsStartWidth + deltaX);
+        }
+        if (settingsResizeDirection.includes('left')) {
+            const potentialWidth = settingsStartWidth - deltaX;
+            if (potentialWidth >= minWidth) {
+                newWidth = potentialWidth;
+                newLeft = settingsStartLeft + deltaX;
+            }
+        }
+        if (settingsResizeDirection.includes('bottom')) {
+            newHeight = Math.max(minHeight, settingsStartHeight + deltaY);
+        }
+        if (settingsResizeDirection.includes('top')) {
+            const potentialHeight = settingsStartHeight - deltaY;
+            if (potentialHeight >= minHeight) {
+                newHeight = potentialHeight;
+                newTop = settingsStartTop + deltaY;
+            }
+        }
+        
+        settingsWindow.style.width = newWidth + 'px';
+        settingsWindow.style.height = newHeight + 'px';
+        settingsWindow.style.left = newLeft + 'px';
+        settingsWindow.style.top = newTop + 'px';
+        settingsWindow.style.transform = 'none';
+    }
+    
+    function settingsStopResize() {
+        if (settingsIsResizing) {
+            settingsIsResizing = false;
+            settingsResizeDirection = '';
+            
+            const rect = settingsWindow.getBoundingClientRect();
+            settingsOriginalSize = {
+                width: rect.width + 'px',
+                height: rect.height + 'px',
+                top: rect.top + 'px',
+                left: rect.left + 'px',
+                transform: 'none'
+            };
+        }
+    }
+    
+    // 初始化设置窗口调整大小功能
+    createSettingsResizeHandles();
+    
+    // 为设置窗口调整大小的区域添加事件监听
+    const settingsResizeHandles = settingsWindow?.querySelectorAll('.resize-handle');
+    settingsResizeHandles?.forEach(handle => {
+        handle.addEventListener('mousedown', function(e) {
+            const direction = this.className.replace('resize-handle resize-', '');
+            settingsStartResize(e, direction);
+        });
+    });
+    
+    // 全局鼠标移动和释放事件
+    document.addEventListener('mousemove', function(e) {
+        if (settingsIsResizing) {
+            settingsDoResize(e);
+        }
+    });
+    
+    document.addEventListener('mouseup', function() {
+        settingsStopResize();
+    });
+
+    // 设置侧边栏点击
+    const settingsSidebarItems = settingsWindow?.querySelectorAll('.sidebar-item');
+    const settingsTitle = settingsWindow?.querySelector('.finder-title');
+    
+    settingsSidebarItems?.forEach(item => {
+        item.addEventListener('click', function() {
+            settingsSidebarItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            const settingName = this.querySelector('span').textContent;
+            if (settingsTitle) settingsTitle.textContent = settingName;
+        });
+    });
 });

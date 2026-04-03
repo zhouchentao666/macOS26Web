@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -384,6 +384,139 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 设置窗口 -->
+    <div class="finder-window" id="settings-window" style="display: none;">
+        <div class="finder-content">
+            <div class="finder-sidebar">
+                <div class="window-controls">
+                    <span class="control-btn close"></span>
+                    <span class="control-btn minimize"></span>
+                    <span class="control-btn maximize"></span>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-label">设置</div>
+                    <div class="sidebar-item active">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3L9 9L14 10L10 14L8 13L6 14L2 10L7 9L8 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>通用</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M2 6H14" stroke="currentColor" stroke-width="1.5"/></svg>
+                        <span>桌面与屏幕保护</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 2L6 8L13 14V2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 2V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <span>显示器</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 6V10M6 8H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <span>壁纸</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3C5.23858 3 3 5.23858 3 8C3 10.7614 5.23858 13 8 13C10.7614 13 13 10.7614 13 8C13 5.23858 10.7614 3 8 3Z" stroke="currentColor" stroke-width="1.5"/><path d="M8 7V9M7 8H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <span>隐私与安全性</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4H12C12.5523 4 13 4.44772 13 5V11C13 11.5523 12.5523 12 12 12H4C3.44772 12 3 11.5523 3 11V5C3 4.44772 3.44772 4 4 4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>通知</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 5H5C4.44772 5 4 5.44772 4 6V10C4 10.5523 4.44772 11 5 11H11C11.5523 11 12 10.5523 12 10V6C12 5.44772 11.5523 5 11 5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>聚焦</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11 5H5C4.44772 5 4 5.44772 4 6V10C4 10.5523 4.44772 11 5 11H11C11.5523 11 12 10.5523 12 10V6C12 5.44772 11.5523 5 11 5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span> Siri 与 Spotlight</span>
+                    </div>
+                </div>
+            </div>
+            <div class="finder-main">
+                <div class="finder-titlebar">
+                    <div class="finder-titlebar-left">
+                        <div class="finder-toolbar">
+                            <button class="toolbar-btn" title="后退">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M8.5 3L4.5 7L8.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="finder-title">通用</span>
+                    </div>
+                </div>
+                <div class="finder-files">
+                    <div class="settings-content">
+                        <div class="settings-section">
+                            <h3>外观</h3>
+                            <div class="settings-item">
+                                <label>外观</label>
+                                <div class="settings-control">
+                                    <div class="menu-item-wrapper">
+                                        <div class="menu-trigger settings-dropdown">
+                                            <span>浅色</span>
+                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                <path d="M6 9L2 5L10 5L6 9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                        <div class="dropdown-menu">
+                                            <div class="dropdown-item" data-value="浅色">浅色</div>
+                                            <div class="dropdown-item" data-value="深色">深色</div>
+                                            <div class="dropdown-item" data-value="自动">自动</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings-item">
+                                <label>强调色</label>
+                                <div class="settings-control">
+                                    <div class="menu-item-wrapper">
+                                        <div class="menu-trigger settings-dropdown">
+                                            <span>蓝色</span>
+                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                <path d="M6 9L2 5L10 5L6 9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                        <div class="dropdown-menu">
+                                            <div class="dropdown-item" data-value="蓝色">蓝色</div>
+                                            <div class="dropdown-item" data-value="紫色">紫色</div>
+                                            <div class="dropdown-item" data-value="粉色">粉色</div>
+                                            <div class="dropdown-item" data-value="红色">红色</div>
+                                            <div class="dropdown-item" data-value="橙色">橙色</div>
+                                            <div class="dropdown-item" data-value="黄色">黄色</div>
+                                            <div class="dropdown-item" data-value="绿色">绿色</div>
+                                            <div class="dropdown-item" data-value="青色">青色</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3>边栏</h3>
+                            <div class="settings-item">
+                                <label>在边栏中显示</label>
+                                <div class="settings-control">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>个人收藏</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>iCloud</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>位置</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" checked>
+                                        <span>标签</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

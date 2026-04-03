@@ -1,4 +1,4 @@
-/* 下拉菜单液态玻璃效果 */
+/* 下拉菜单毛玻璃效果 */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -6,12 +6,12 @@
   min-width: 220px;
   margin-top: 4px;
   padding: 3px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid transparent;
+  background: var(--titlebar-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6), 0 16px 32px rgba(0, 0, 0, 0.12);
-  backdrop-filter: url(#frosted);
-  -webkit-backdrop-filter: url(#frosted);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 16px 48px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-8px);
@@ -30,7 +30,7 @@
 .dropdown-item {
   padding: 3px 16px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--text-color);
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.15s ease, color 0.15s ease;
@@ -41,65 +41,36 @@
   mix-blend-mode: normal;
 }
 
-/* 自动颜色：使用CSS滤镜反转来适应背景 */
-@supports (backdrop-filter: invert(1)) or (-webkit-backdrop-filter: invert(1)) {
-  .dropdown-menu {
-    backdrop-filter: url(#frosted) invert(0.05);
-    -webkit-backdrop-filter: url(#frosted) invert(0.05);
-  }
-}
-
 .dropdown-item:hover:not(.disabled) {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-color);
 }
 
 .dropdown-item.disabled {
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--text-color);
+  opacity: 0.3;
   cursor: default;
 }
 
 .dropdown-divider {
   height: 1px;
   margin: 2px 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--border-color);
 }
 
 .shortcut {
   margin-left: 24px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-color);
+  opacity: 0.5;
 }
 
 .dropdown-item:hover:not(.disabled) .shortcut {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-color);
+  opacity: 0.7;
 }
 
-/* 浅色背景时的样式 */
-.dropdown-menu.light-bg .dropdown-item {
-  color: rgba(0, 0, 0, 0.9);
-}
 
-.dropdown-menu.light-bg .dropdown-item:hover:not(.disabled) {
-  background: rgba(0, 0, 0, 0.08);
-  color: rgba(0, 0, 0, 1);
-}
-
-.dropdown-menu.light-bg .dropdown-item.disabled {
-  color: rgba(0, 0, 0, 0.3);
-}
-
-.dropdown-menu.light-bg .dropdown-divider {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-menu.light-bg .shortcut {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.dropdown-menu.light-bg .dropdown-item:hover:not(.disabled) .shortcut {
-  color: rgba(0, 0, 0, 0.7);
-}
 
 .menu-item-wrapper {
   position: relative;
