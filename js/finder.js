@@ -1842,13 +1842,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // 设置侧边栏点击
     const settingsSidebarItems = settingsWindow?.querySelectorAll('.sidebar-item');
     const settingsTitle = settingsWindow?.querySelector('.finder-title');
+    const settingsContent = settingsWindow?.querySelector('.settings-content');
+    const aboutPanel = settingsWindow?.querySelector('#about-panel');
     
     settingsSidebarItems?.forEach(item => {
         item.addEventListener('click', function() {
             settingsSidebarItems.forEach(i => i.classList.remove('active'));
             this.classList.add('active');
             const settingName = this.querySelector('span').textContent;
-            if (settingsTitle) settingsTitle.textContent = settingName;
+            
+            // 检查是否是关于面板
+            if (this.dataset.panel === 'about') {
+                if (settingsContent) settingsContent.style.display = 'none';
+                if (aboutPanel) aboutPanel.style.display = 'block';
+                if (settingsTitle) settingsTitle.textContent = '关于';
+            } else {
+                if (settingsContent) settingsContent.style.display = 'block';
+                if (aboutPanel) aboutPanel.style.display = 'none';
+                if (settingsTitle) settingsTitle.textContent = settingName;
+            }
         });
     });
 });

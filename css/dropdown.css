@@ -42,7 +42,7 @@
 }
 
 .dropdown-item:hover:not(.disabled) {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--hover-bg);
   color: var(--text-color);
 }
 
@@ -83,6 +83,6 @@
 }
 
 .menu-item-wrapper.active > .menu-trigger {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--active-bg);
   border-radius: 4px;
 }

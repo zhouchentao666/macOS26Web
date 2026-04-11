@@ -1,7 +1,9 @@
 // 下拉菜单交互脚本
 
 document.addEventListener('DOMContentLoaded', function() {
-    const menuWrappers = document.querySelectorAll('.menu-item-wrapper');
+    // 只处理顶部菜单栏的菜单（menu-bar 内的），不处理设置窗口内的
+    const menuBar = document.querySelector('.menu-bar');
+    const menuWrappers = menuBar ? menuBar.querySelectorAll('.menu-item-wrapper') : [];
     let currentOpenMenu = null;
 
     menuWrappers.forEach(wrapper => {

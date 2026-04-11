@@ -20,6 +20,10 @@
 }
 
 .desktop-icon:hover {
+    background: var(--hover-bg);
+}
+
+body.dark-mode .desktop-icon:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 

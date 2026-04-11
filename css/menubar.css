@@ -35,7 +35,17 @@
 }
 
 .menu-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+body:not(.dark-mode) .menu-item:hover {
+    background: rgba(0, 0, 0, 0.15);
+    color: white;
+}
+
+body.dark-mode .menu-item:hover {
     background: rgba(255, 255, 255, 0.15);
+    color: white;
 }
 
 .menu-item.active {
